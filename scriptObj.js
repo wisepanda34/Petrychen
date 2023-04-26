@@ -41,3 +41,4 @@ for (let key in options) {
 //подсчет количества свойств в объекте двумя разными способами
 console.log(`Количество свойств объекта равно ${counter}`);
 console.log(Object.keys(options).length);
+

@@ -68,120 +68,89 @@
 
 4) Потренироваться и переписать цикл еще двумя способами*/
 
-let numberOfFilms;
 
-function start() {
-	numberOfFilms = +prompt('how much films did you watch?', '');
-	while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
-		numberOfFilms = +prompt('how much films did you watch?', '');
-
-	}
-}
-
-start();
 
 const personalMovieDB = {
-	count: numberOfFilms,
+	count: 0,
 	movies: {},
 	actors: {},
 	genres: [],
-	privat: false
-}
+	privat: false,
+	start: function () {
+		personalMovieDB.count = +prompt('how much films did you watch?', '');
+		while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
+			personalMovieDB.count = +prompt('how much films did you watch?', '');
 
-function rememberMyFilms() {
-	for (let i = 0; i < 2; i++) {
-		const a = prompt('name last film that you watched!', '');
-		const b = +prompt('what level does have this film?', '');
-
-		if (a != null && b != null && a != '' && b != '' && a.length < 10) {
-			console.log('ok');
-			personalMovieDB.movies[a] = b;
 		}
-		else {
-			i--;
-			console.log('error');
+	},
+	rememberMyFilms: function () {
+		for (let i = 0; i < 2; i++) {
+			const a = prompt('name last film that you watched!', '');
+			const b = +prompt('what level does have this film?', '');
+
+			if (a != null && b != null && a != '' && b != '' && a.length < 10) {
+				console.log('ok');
+				personalMovieDB.movies[a] = b;
+			}
+			else {
+				i--;
+				console.log('error');
+			}
 		}
-	}
+	},
+	detectPersonalLevel: function () {
+		if (personalMovieDB.count <= 10) {
+			console.log('less');
+		} else if (personalMovieDB.count <= 30 && personalMovieDB.count > 10) {
+			console.log('good');
+		} else if (personalMovieDB.count > 30) {
+			console.log('much');
+		} else {
+			console.log('error cinena');
+		}
+	},
+
+	showMyDB: function (hidden) {
+		if (!hidden) {
+			console.log(personalMovieDB);
+		}
+	},
+
+	toggleVisibleMyDB: function () {
+		if (personalMovieDB.privat) {
+			personalMovieDB.privat = false;
+		} else {
+			personalMovieDB.privat = true;
+		}
+	},
+	writeYourGenres: function () {
+		for (let i = 1; i <= 3; i++) {
+			let favoriteGenre = prompt(`What is your favorite genre № ${i} ?`);
+			if (favoriteGenre != '' && favoriteGenre != null && isNaN(favoriteGenre)) {
+				personalMovieDB.genres.push(favoriteGenre);
+			} else {
+				i--;
+				console.log('Repeat please input');
+			}
+		}
+		personalMovieDB.genres.forEach((element, g) => {
+			console.log(`Your favorite genre #${g + 1} is ${element}`);
+		});
+	},
 }
-rememberMyFilms();
-
-// let r = 0;
-// while (r < 3) {
-
-// 	const a = prompt('name last film that you watched!', '');
-// 	if (a.length > 10) {
-
-// 	}
-// 	const b = +prompt('what level does have this film?', '');
-// 	personalMovieDB.movies[a] = b;
-// 	r++;
-// }
-
-
-// const a = prompt('name last film that you watched!', ''),
-// 	b = +prompt('what level does have this film?', ''),
-// 	c = prompt('name last film that you watched!', ''),
-// 	d = +prompt('what level does have this film?', '');
-
-// personalMovieDB.movies[a] = b;
-// personalMovieDB.movies[c] = d;
-
-function detectPersonalLevel() {
-	if (personalMovieDB.count <= 10) {
-		console.log('less');
-	} else if (personalMovieDB.count <= 30 && personalMovieDB.count > 10) {
-		console.log('good');
-	} else if (personalMovieDB.count > 30) {
-		console.log('much');
-	} else {
-		console.log('error cinena');
-	}
-}
-detectPersonalLevel();
-
-
-/*1) Первую часть задания повторить по уроку
-
-2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции false - выводит в консоль главный объект программы.
-
-3) Создать функцию writeYourGenres в которой пользователь будет отвечать 3 раза "Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных genres.
-
-P.S. Функции вызывать не обязательно. */
-
-// let favoriteGenre;
-// function writeYourGenres() {
-
-// 	for (let i = 0; i < 3; i++) {
-// 		favoriteGenre = prompt('What is your favorite genre?');
-// 		while (favoriteGenre == '' || favoriteGenre == null || !isNaN(favoriteGenre)) {
-// 			favoriteGenre = prompt('What is your favorite genre?');
-// 		}
-// 		personalMovieDB.genres.push(favoriteGenre);
-// 	}
-// }
-function writeYourGenres() {
-	for (let i = 1; i <= 3; i++) {
-		let favoriteGenre = prompt(`What is your favorite genre № ${i} ?`);
-		if (favoriteGenre != '' && favoriteGenre != null && isNaN(favoriteGenre)) {
-			personalMovieDB.genres.push(favoriteGenre);
-		} else i--;
-		console.log(favoriteGenre);
-	}
-}
-writeYourGenres();
 
 
 
-// function showMyDB() {
-// 	if (personalMovieDB.privat == false) {
-// 		console.log(personalMovieDB);
-// 	} else console.log('privat is true!');
-// }
-// showMyDB();
 
-function showMyDB(hidden) {
-	if (!hidden) {
-		console.log(personalMovieDB);
-	}
-}
-showMyDB(personalMovieDB.privat);
+
+/*1) У нас уже есть рабочее приложение, состоящее из отдельных функций. Представьте, что
+перед вами стоит задача переписать его так, чтобы все функции стали методами объекта personalMovieDB
+Такое случается в реальных продуктах при смене технологий или подхода к архитектуре программы
+
+2) Создать метод toggleVisibleMyDB, который при вызове будет проверять свойство privat. Если оно false - он
+переключает его в true, если true - переключает в false. Протестировать вместе с showMyDB.
+
+3) В методе writeYourGenres запретить пользователю нажать кнопку "отмена" или оставлять пустую строку. 
+Если он это сделал - возвращать его к этому же вопросу. После того, как все жанры введены - 
+при помощи метода forEach вывести в консоль сообщения в таком виде:
+"Любимый жанр #(номер по порядку, начиная с 1) - это (название из массива)"*/

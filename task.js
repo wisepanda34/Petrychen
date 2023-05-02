@@ -961,8 +961,8 @@ function flatten(arr) {
 	}
 	return result;
 }
-flatten([1, 2, [3, 4], 5, [6, [7, 8], 9]]) // [1, 2, 3, 4, 5, 6, 7, 8, 9]
-flatten([]) // []
+// flatten([1, 2, [3, 4], 5, [6, [7, 8], 9]]) // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+// flatten([]) // []
 
-console.log(flatten([1, 2, [3, 4], 5, [6, [7, 8], 9]])); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
-console.log(flatten([])); // []
+// console.log(flatten([1, 2, [3, 4], 5, [6, [7, 8], 9]])); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+// console.log(flatten([])); // []

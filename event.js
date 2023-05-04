@@ -86,4 +86,93 @@ inputField.addEventListener('keydown', (e) => {
 	}
 });
 
-//5)
+//5)Напишите функцию, которая будет отображать всплывающую подсказку при наведении на элемент. Подсказка должна показываться рядом с элементом и иметь текст, который передается в функцию в качестве аргумента.
+
+const element5 = document.getElementById('element5');
+const tooltip5 = document.createElement('div');
+tooltip5.classList.add('tooltip5');
+tooltip5.innerText = 'Тeкст подсказки';
+
+element5.addEventListener('mouseover', () => {
+	document.body.appendChild(tooltip5);
+	const element5Rect = element5.getBoundingClientRect();
+	const tooltip5Rect = tooltip5.getBoundingClientRect();
+	tooltip5.style.top = element5Rect.top - tooltip5Rect.height - 5 + 'px';
+	textLength = element5.textContent.length;
+	tooltip5.style.left = element5Rect.left + textLength * 5 + 'px';
+	// console.log('tooltip5.style.left=' + tooltip5.style.left);
+	// console.log('element5Rect.left=' + element5Rect.left);
+})
+element5.addEventListener('mouseout', () => {
+	document.body.removeChild(tooltip5);
+})
+
+//6)Создайте страницу с двумя кнопками: "Начать" и "Остановить". Когда пользователь нажимает на кнопку "Начать", на странице начинает появляться случайный цвет каждые 2 секунды. Когда пользователь нажимает на кнопку "Остановить", цвета перестают появляться.
+const startBtn = document.getElementById('start-btn')
+const stopBtn = document.getElementById('stop-btn')
+
+let colorInterval;
+
+function startColorInterval() {
+	colorInterval = setInterval(() => {
+		const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+		document.body.style.backgroundColor = '#' + randomColor;
+	}, 2000);
+}
+function stopColorInterval() {
+	clearInterval(colorInterval);
+}
+
+startBtn.addEventListener('click', startColorInterval);
+stopBtn.addEventListener('click', stopColorInterval);
+
+//7)Создайте страницу с кнопкой. При клике на кнопку происходит скачивание файла с заданным содержимым.
+const downloadBtn = document.getElementById("download-btn");
+
+downloadBtn.addEventListener("click", function () {
+	const text = "Привет, я содержимое файла!";
+	const filename = "file.txt";
+
+	const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+	const link = document.createElement("a");
+
+	link.href = window.URL.createObjectURL(blob);
+	link.download = filename;
+
+	document.body.appendChild(link);
+
+	link.click();
+
+	document.body.removeChild(link);
+});
+
+//8)Создать форму с инпутом для ввода числа и кнопкой. При клике на кнопку нужно сгенерировать случайное число от 1 до введенного числа и вывести его на экран в виде алерта.
+
+const generateBtn = document.getElementById('generate-btn')
+
+generateBtn.addEventListener('click', () => {
+	const inputNum = document.getElementById('inputNum')
+	let maxNum = inputNum.value;
+	let randomNum = Math.floor(Math.random() * (maxNum) + 1);
+	alert(randomNum);
+})
+
+//9)Создайте кнопку, которая будет менять цвет фона страницы при клике на нее. При повторном клике цвет фона должен возвращаться к исходному.
+
+const changeColorBody = document.getElementById('changeColorBody')
+const body = document.body;
+let isChangeColor = false;
+let originalColor;
+
+changeColorBody.addEventListener('click', () => {
+
+	if (!isChangeColor) {
+		originalColor = body.style.backgroundColor;
+		body.style.backgroundColor = 'green';
+		isChangeColor = true;
+	}
+	else {
+		body.style.backgroundColor = originalColor;
+		isChangeColor = false;
+	}
+})
